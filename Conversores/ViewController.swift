@@ -84,47 +84,40 @@ class ViewController: UIViewController {
     
     func calcTemperature() {
         guard let temperature = Double(tfValue.text!) else { return }
-        if btUnitOne.alpha.isEqual(to: 1.0) {
-            lbResultUnit.text = typeOfMeasure[3]
-            lbResult.text = String(temperature * 1.8 + 32.0)
-        } else {
-            lbResultUnit.text = unitOfMeasure[3]
-            lbResult.text = String((temperature - 32.0) / 1.8)
-        }
+        
+        let calc = String(temperature * 1.8 + 32.0)
+        let calcElse = String((temperature - 32.0) / 1.8)
+        
+        genericFunc(index: 3, paransOne: calc, paransTow: calcElse)
     }
     
     func calcWeight() {
-        guard let weight = Double(tfValue.text!) else { return }
-        if btUnitOne.alpha.isEqual(to: 1.0) {
-            lbResultUnit.text = typeOfMeasure[0]
-            lbResult.text = String(weight / 2.2046)
-        } else {
-            lbResultUnit.text = unitOfMeasure[0]
-            lbResult.text = String(weight * 2.2046)
-        }
-
+        calcGeneric(0, mutiplic: 2.2046)
     }
     
     func calcCurrency() {
-        guard let currency = Double(tfValue.text!) else { return }
-        let dolarToDay = 5.23
-        if btUnitOne.alpha.isEqual(to: 1.0) {
-            lbResultUnit.text = typeOfMeasure[1]
-            lbResult.text = String(currency / dolarToDay)
-        } else {
-            lbResultUnit.text = unitOfMeasure[1]
-            lbResult.text = String(currency * dolarToDay)
-        }
+        calcGeneric(1, mutiplic: 5.23)
     }
     
     func calcDistance() {
-        guard let distance = Double(tfValue.text!) else { return }
+        calcGeneric(2, mutiplic: 1000.0)
+    }
+    
+    func calcGeneric(_ index: Int, mutiplic: Double){
+        guard let value = Double(tfValue.text!) else { return }
+        let calc = String(value / mutiplic)
+        let calcElse = String(value * mutiplic)
+        
+        genericFunc(index: index, paransOne: calc, paransTow: calcElse)
+    }
+    
+    func genericFunc(index: Int, paransOne: String, paransTow: String){
         if btUnitOne.alpha.isEqual(to: 1.0) {
-            lbResultUnit.text = typeOfMeasure[2]
-            lbResult.text = String(distance / 1000.0)
+            lbResultUnit.text = typeOfMeasure[index]
+            lbResult.text = paransOne
         } else {
-            lbResultUnit.text = unitOfMeasure[2]
-            lbResult.text = String(distance * 1000.0)
+            lbResultUnit.text = unitOfMeasure[index]
+            lbResult.text = paransTow
         }
     }
 
